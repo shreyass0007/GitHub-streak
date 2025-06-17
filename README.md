@@ -1,138 +1,140 @@
-#🔁 GitHub Daily Streak Maintainer
-Automate your GitHub contribution streak with a Python script that makes daily commits for you. Perfect for developers who want to stay consistent, build discipline, or keep their GitHub graph green 🌱 — even on busy days!
 
-✅ Easy to set up & use
-⚙️ Fully customizable
-🕒 Works with Task Scheduler (Windows)
-💻 No dependencies other than Python & Git
+# 🔁 Auto Git Daily Commit Bot
 
-🔍 Keywords / Tags
-GitHub streak automation • GitHub daily commit • Python auto commit • maintain GitHub streak • GitHub contribution tracker • Git commit automation • developer productivity tool
+Automate your daily GitHub contributions with scheduled, randomized commits — and keep your commit streak alive effortlessly.
 
-📸 Preview
+## 📌 Features
 
-Example of a green contribution graph on GitHub
+* ✅ Automatically commits daily to a dummy repository
+* 🔀 Random commit messages and content
+* 🔁 Tracks daily commit streaks
+* 📅 Detects and logs missed days
+* 🛠 Logs everything in `git_commits.log`
+* 📁 Fully customizable via `config.json`
 
-🚀 What This Script Does
-Adds a line with the current timestamp to a file daily
+---
 
-Commits and pushes the change to your GitHub repo
+## 📂 Project Structure
 
-Tracks your streak (how many days in a row you've committed)
+```
+AutoGitBot/
+│
+├── main.py              # Main script with logging and error handling
+├── config.json          # Configurable repo path, branch, commit limits
+├── daily_streak.txt     # Updated with each commit (content added)
+├── streak.txt           # Stores current streak count
+├── last_commit.txt      # Stores date of last commit
+├── git_commits.log      # Full activity and error log
+└── README.md            # Documentation
+```
 
-Logs all actions and handles errors automatically
+---
 
-🧰 Prerequisites
-Python 3.x installed on your system
+## ⚙️ Configuration (`config.json`)
 
-Git installed and configured (git config --global user.name "YourName")
+The first time the script runs, it generates a default `config.json` file.
 
-A GitHub repo cloned locally to store daily commits (e.g. daily-commit-tracker)
-
-📦 Installation & Setup
-1. Clone or Download the Repository
-bash
-Copy
-Edit
-git clone https://github.com/yourusername/github-streak-maintainer.git
-cd github-streak-maintainer
-2. Configure Your Settings
-A config.json file is automatically created when you run the script for the first time. You can edit it to suit your preferences.
-
-json
-Copy
-Edit
+```json
 {
-  "repo_path": "C:\\Users\\YourName\\Documents\\DailyRepo",
+  "repo_path": "C:\\Users\\shrey\\Documents\\DummyRepo",
   "min_commits": 1,
-  "max_commits": 3,
+  "max_commits": 10,
   "commit_delay": 2,
   "branch": "main"
 }
-Parameters:
+```
 
-repo_path: Local path to your GitHub repo
+### Options:
 
-min_commits / max_commits: Number of commits made per day
+* **repo\_path**: Full path to your dummy Git repository
+* **min\_commits / max\_commits**: Random number of commits daily
+* **commit\_delay**: Delay (in seconds) between each commit
+* **branch**: Branch name (default: `main`)
 
-commit_delay: Delay between commits (in seconds)
+---
 
-branch: Git branch to push to (main or master)
+## 🚀 How It Works
 
-3. Run It Once to Initialize
-bash
-Copy
-Edit
-python streak_maintainer.py
-It will:
+1. Checks `last_commit.txt` to determine if previous days were missed.
+2. Makes a random number of commits (`min_commits` to `max_commits`) to `daily_streak.txt`.
+3. Uses randomized messages/content.
+4. Updates `streak.txt` and `last_commit.txt` if successful.
+5. Logs everything in `git_commits.log`.
 
-Create necessary files (streak.txt, last_commit.txt)
+---
 
-Push your first automated commit
+## 🛠️ Setup Instructions
 
-4. Automate Daily Runs (Windows Task Scheduler)
-Open Task Scheduler
+### 1. ✅ Prerequisites
 
-Click Create Basic Task
+* Python 3.x installed
+* Git installed and configured
+* A dummy GitHub repository (cloned locally)
 
-Set a name like GitHub Daily Streak
+### 2. 📁 Clone or Create a Dummy Repo
 
-Trigger: Daily
+```bash
+git clone https://github.com/your-username/dummy-repo.git
+```
 
-Action: Start a program
+### 3. 📝 Update `config.json`
 
-Program/script: python
+Set your local repo path and branch name.
 
-Add arguments: path\to\streak_maintainer.py
+### 4. ▶️ Run the Script
 
-Save and run
+```bash
+python main.py
+```
 
-✅ That’s it! The script will now run automatically and keep your streak alive.
+### 5. ⏱ (Optional) Schedule It Daily
 
-🗃️ Files & What They Do
-File	Description
-streak_maintainer.py	Main automation script
-config.json	Stores your custom configuration
-daily_streak.txt	Dummy file where content is added
-last_commit.txt	Tracks the last commit date
-streak.txt	Tracks your current streak count
-git_commits.log	Full log of all operations (success or errors)
+Use Task Scheduler (Windows) or `cron` (Linux/Mac) to run the script daily.
 
-💬 Sample Commit Messages
-“Another day, another commit”
+---
 
-“Daily update at 2025-06-16 09:45:12”
+## 📄 Log Output Example (`git_commits.log`)
 
-“Keeping the streak alive”
+```
+2025-06-17 10:00:00 - INFO - Starting scheduled commit task
+2025-06-17 10:00:01 - INFO - Attempting to make 3 commits today
+2025-06-17 10:00:05 - INFO - Made 3/3 commits successfully. Messages: Keeping the streak alive, Daily update, Level up: Daily commit
+2025-06-17 10:00:05 - INFO - Current streak: 12 days
+```
 
-“Consistency is key”
+---
 
-⚠️ Notes & Best Practices
-Use a dedicated GitHub repository (like daily-commit-tracker) to avoid cluttering your main projects.
+## 🔐 Error Handling
 
-This works best with a public repo, so your GitHub graph updates visibly.
+* Handles:
 
-Be sure Git is authenticated using SSH or GitHub token.
+  * Missing/malformed config or tracking files
+  * Git operation failures
+  * Missed days in streak
+* Logs every failure with traceback in `git_commits.log`
 
-Keep your system running (or host this on a server/VPS for uninterrupted automation).
+---
 
-📈 Future Improvements (To-Do)
- Add Linux/macOS cron job setup guide
+## 🌟 Motivation
 
- Add GitHub Actions version (no local script needed)
+GitHub contribution graphs can be a great motivator. This tool helps developers:
 
- Optional: Create a GUI-based version
+* Build consistency
+* Maintain a green contribution graph
+* Practice discipline through automation
 
-🧠 Why Use This?
-Build coding discipline & consistency
+---
 
-Keep your GitHub active even on vacation
+## 🧠 Pro Tip
 
-Show employers your dedication
+Use this only with a **dummy repo**. Avoid automating commits to real codebases to maintain meaningful commit history.
 
-Improve your personal branding on GitHub
+---
 
-👤 Author
-Built with ❤️ by Shreyas Shende
+## 📌 License
 
-If you like this project, please ⭐️ the repo and share it!
+MIT License – feel free to use and modify for personal projects.
+
+---
+
+
